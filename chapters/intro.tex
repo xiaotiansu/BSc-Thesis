@@ -1,0 +1,50 @@
+\chapter{Introduction}
+
+Program synthesis is the task of automatically generating code in a particular programming language that satisfies the user intent expressed in the form of some specification. 
+
+This project develops a program synthesis model to automatically construct a program given sample input and output pairs. The program is written in a Domain Specific Language that we constructed on our own.
+
+We first designed and implemented the DSL. Then generating the random stacks and programs. Restrictions to types and values were added during data generation. Afterwards, we embedded the synthetic data into an abstract syntax tree so that they could be fed into the Tree-LSTM network. We trained the model to one term each time that transforms the given inputs to the given outputs. 
+
+The work employs beam search to the program synthesis problem. Given the current state, our neural network directly predicts the next term to manipulate the global stack to get closer to the solution. The beam search algorithm will then rank and select from the network’s outputs, reapplying the predictions at each step. Eventually, we can generate a concatenative program to achieve certain functionalities.
+
+For demonstration purposes, we added a handy graphical user interface with the PySimpleGUI library. The user can enter input and output examples and get the program that satisfies the specification. There is also an animation to exhibit how our DSL manipulates the global stack so as to get the output from the input.
+
+The chapters are as follows: Background (chapter 1) covers the theoretical background practical necessity for program synthesis, the User Documentation(chapter 2) provides detailed guidance for the user to build dependencies and run the program, and the Developer Documentation (chapter 3) covers the necessary knowledge for implementing the domain-specific language, building and training the model, and testing.
+
+\section{Background}
+Program synthesis is a field at the intersection of programming languages, formal methods, and AI. It is the mechanized construction of software, dubbed ‘self-writing code’. Synthesis tools relieve the programmer from thinking about how the problem is to be solved; instead, the programmer only provides a description of what is to be achieved. Given a specification of what the program should do, the synthesizer generates an implementation that provably satisfies this specification. Since the inception of artificial intelligence in the 1950s, this problem has been considered the holy grail of Computer Science.\cite{progsynth}
+
+In the thesis, we study program synthesis in a Domain Specific Language (DSL) - a stack-based concatenative language that we implemented on our own, mostly inspired by Cat programming language \cite{cat}. 
+
+Programming languages can be categorized in different ways. One of them is to define the languages as either "concatenative" or "applicative". \cite{concat} In an applicative language, things are evaluated by applying functions to arguments, like C, Python, and Java. In a concatenative programming language, things are evaluated by function compositions. There are no variables in this language, a sequence of operations will take values from an implicit data structure to operate on, and return the result to that structure. This implicit data structure is usually stack. Most existing concatenative languages are stack-based \cite{wiki:concat}. The attributes of the concatenative language make it perfect for chaining existing code to create something new.
+
+A stack-based language is one where most operations are done on a stack of values. Functions take their inputs from the stack, do some computation, and return their results on the same stack. The language often provide some sort of stack manipulation operators. Commonly provided are \texttt{dup}, to duplicate the element atop the stack, \texttt{exch} (or \texttt{swap}), to interchange elements atop the stack. Stack-oriented programming languages may be conceptually difficult for humans to understand, but the advantage is that they are very easy for computers to evaluate and generate. Therefore, it serves as an ideal candidate for the program synthesis project. Section \ref{sec:stack-based} provides a detailed explanation on the stack-based language and Section \ref{sec:stack-based catlang} digs into our DSL. 
+
+\section{Related Work}
+The influential work in the field of program synthesis is DeepCoder \cite{deepc} which serves as a baseline for a lot of program synthesis projects. For example, using the Domain Specific Language (DSL) defined by the DeepCoder paper, PCCoder \cite{pcc} showed great advances in the performance of the synthesis process. They managed to solve programs more than two times as complex while preserving decent accuracy and search time. This software used a similar idea as shown in \cite{deepc}, but we constructed our own domain-specific language which is both powerful and neat.
+
+\section{Outline}
+Chapter \ref{user} User Documentation has the following content: 
+\begin{itemize}
+	\item A brief introduction to the main methods and tools used to build the software. See section \ref{sec:tools}.
+	
+	\item The environment of the developer and how the end-user can install and run the program. See section \ref{install}.
+	
+	\item The description of the domain-specific language used in the software. See section \ref{sec:lang}.
+	
+	\item A description of system functions, the running outcome from the user's point of view, and explanation of error messages. \ref{using}
+\end{itemize}
+
+\noindent Chapter \ref{dev} Developer Documentation provides the following information: 
+\begin{itemize}
+	\item An overview of the file structure and workflow of our project. See section \ref{sec:overview}.
+	
+	\item The importance of domain-specific language and the specification and a detailed explanation of our DSL. See section \ref{sec:dsl}.
+	
+	\item The process of preparing data before training the model. See section \ref{sec:datagen}.
+	
+	\item The architecture of our neural network and the selection of hyperparameters and the loss function. See section \ref{sec:network}.
+	
+	\item Testing plans, tools, writing examples, and results. Pytest \cite{pytest} is for unit testing and hypothesis test \cite{hytest} is used for property testing. See section \ref{sec:test}.
+\end{itemize}

@@ -1,0 +1,24 @@
+\chapter{Conclusion}
+The objective of this thesis was to design and implement software that can predict programs given user specifications and present to the user how the language works.
+
+In the design phase, during the planning of the workflow, research was conducted on program synthesis, DSL, and Tree-LSTM networks. We chose Python as the programming language since Python code is understandable by humans, which makes it easier to build models for machine learning. And we decided to used PySimpleGUI to provide a graphical user interface. We found that it is more efficient and easier to work with if we construct our own domain-specific language.
+
+In the implementation phase, we used many third-party tools to help us with the type checking and network building. We first implemented the DSL, then generated data with restrictions on integer ranges and validations on stack types, and encoded stacks. Then, we built the neural network, trained the model, and experimented with different hyper-parameters to improve the validation accuracy. 
+
+The user interface is clean and stylish. It is able to guide the user step by step of how the composition of terms do their magic when manipulating the stack. By presenting the animation of the stack, the user can be more familiar with the stack data structure, and get the gist of the stack-oriented language.
+
+Overall, the project achieved the desired result with an informative user interface. It is a helpful software for users who want to know more about program synthesis and stack-based programming paradigm.
+
+\section*{Future Work}
+\addcontentsline{toc}{section}{Future Work} 
+The software is able to generate programs based on user specifications and provide a step-by-step demonstration to aid the user's understanding. But there are still many aspects that can be improved to be better. 
+
+From the implementation perspective:
+\begin{enumerate}
+    \item In addition to \texttt{integers}, we can expand our language by including more types, such as \texttt{bool} and \texttt{list}.
+    \item Implementing more instructions to make our DSL a Turing language.
+    \item Improving our model with some hyperparameter optimization tools and introduce more complicated layers.
+    \item For greater efficiency of the search algorithm, we can introduce the state-of-the-art best-first beam search \cite{best-first}.
+\end{enumerate}
+
+From the user perspective, we aim to develop more features to improve the user experience. For example, we plan to implement language translation. By converting our DSL to a lambda expression, then we can translate the lambda expression to other programming languages, such as python. This way, the user can export the language for later use.
