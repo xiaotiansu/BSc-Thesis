@@ -1,4 +1,4 @@
-# Program Synthesis With a Stack-Based Concatenative Language
+# Tree-LSTM for Program Synthesis With a Stack-Based Concatenative Language
 - Built a Tree-LSTM model for program synthesis 
 
 - Introduced a program synthesis model to predict terms that transform the given inputs to the given outputs.
